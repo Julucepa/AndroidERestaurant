@@ -1,4 +1,4 @@
-package fr.isen.repplinger.androiderestaurant
+package fr.isen.repplinger.androiderestaurant.data
 
 import com.google.gson.annotations.SerializedName
 

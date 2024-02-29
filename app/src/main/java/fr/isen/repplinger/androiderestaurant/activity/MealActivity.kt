@@ -1,9 +1,7 @@
-package fr.isen.repplinger.androiderestaurant
+package fr.isen.repplinger.androiderestaurant.activity
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -38,8 +36,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import fr.isen.repplinger.androiderestaurant.R
+import fr.isen.repplinger.androiderestaurant.data.BasketUser
+import fr.isen.repplinger.androiderestaurant.data.MenuItem
 import fr.isen.repplinger.androiderestaurant.ui.theme.AndroidERestaurantTheme
-import java.io.File
+import fr.isen.repplinger.androiderestaurant.utils.getInfoInFile
+import fr.isen.repplinger.androiderestaurant.utils.sendInfoBasket
 
 
 class MealActivity : ComponentActivity() {
@@ -129,51 +131,6 @@ fun MealBody(meal: MenuItem, basket: MutableLiveData<BasketUser>) {
         }
     }
 
-}
-
-fun sendInfoBasket(meal: MenuItem, currentQuantity: Int, context: Context, basket: MutableLiveData<BasketUser>) {
-    val filePath = "basketUser.json"
-
-    val file = File(context.filesDir, filePath)
-
-    if(!file.exists()) {
-        file.createNewFile()
-    }
-
-    val tmp = basket.value
-
-    if(tmp != null) {
-        Log.d("InfoFile", "Add meal to file")
-        val newBasket = tmp.basket.toMutableList()
-        val mealBasket = newBasket.find { it.nameFr == meal.nameFr }
-        if(mealBasket != null) {
-            val id = newBasket.indexOf(mealBasket)
-            newBasket[id].quantity = newBasket[id].quantity + currentQuantity
-        } else {
-            val dish = Meal(meal.images[0], meal.nameFr, meal.prices[0].price.toFloat(), currentQuantity)
-            newBasket.add(dish)
-        }
-
-        basket.value = BasketUser(newBasket)
-
-        basket.postValue(basket.value)
-
-        val json: String = Gson().toJson(basket.value)
-
-        file.writeText(json)
-    } else {
-        Log.d("InfoFile", "Add meal to file null")
-        val dish = Meal(meal.images[0], meal.nameFr, meal.prices[0].price.toFloat(), currentQuantity)
-        val newBasket: MutableList<Meal> = mutableListOf()
-        newBasket.add(dish)
-        basket.value = newBasket?.let { BasketUser(it) }
-
-        basket.postValue(basket.value)
-
-        val json: String = Gson().toJson(basket.value)
-
-        file.writeText(json)
-    }
 }
 
 @Composable

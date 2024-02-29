@@ -1,7 +1,6 @@
-package fr.isen.repplinger.androiderestaurant
+package fr.isen.repplinger.androiderestaurant.activity
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,8 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.gson.Gson
+import fr.isen.repplinger.androiderestaurant.R
+import fr.isen.repplinger.androiderestaurant.data.BasketUser
 import fr.isen.repplinger.androiderestaurant.ui.theme.AndroidERestaurantTheme
+import fr.isen.repplinger.androiderestaurant.utils.getInfoInFile
+import fr.isen.repplinger.androiderestaurant.utils.removeInfoBasket
+import fr.isen.repplinger.androiderestaurant.utils.sendCommandBasket
 import java.io.File
 
 class BasketActivity : ComponentActivity() {
@@ -145,46 +148,5 @@ fun BodyBasket(basket: MutableLiveData<BasketUser>) {
                     .padding(start = 5.dp),
             )
         }
-    }
-}
-
-fun sendCommandBasket(context: Context, basket: MutableLiveData<BasketUser>) {
-    val filePath = "basketUser.json"
-
-    val file = File(context.filesDir, filePath)
-
-    if(!file.exists()) {
-        file.createNewFile()
-    }
-
-    basket.postValue(null)
-
-    val json: String = Gson().toJson(basket.value)
-
-    file.writeText(json)
-}
-
-fun removeInfoBasket(context: Context, basket: MutableLiveData<BasketUser>, meal: Meal) {
-    val filePath = "basketUser.json"
-
-    val file = File(context.filesDir, filePath)
-
-    if(!file.exists()) {
-        file.createNewFile()
-    }
-
-    val tmp = basket.value
-
-    tmp?.let {
-        val newBasket = it.basket.toMutableList()
-        newBasket.removeIf { it.nameFr == meal.nameFr }
-
-        basket.value = BasketUser(newBasket)
-
-        basket.postValue(basket.value)
-
-        val json: String = Gson().toJson(basket.value)
-
-        file.writeText(json)
     }
 }

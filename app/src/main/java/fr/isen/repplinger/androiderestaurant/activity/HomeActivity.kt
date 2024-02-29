@@ -1,6 +1,5 @@
-package fr.isen.repplinger.androiderestaurant
+package fr.isen.repplinger.androiderestaurant.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -28,11 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.google.gson.Gson
 import fr.isen.repplinger.androiderestaurant.ui.theme.AndroidERestaurantTheme
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import java.io.File
+import fr.isen.repplinger.androiderestaurant.R
+import fr.isen.repplinger.androiderestaurant.data.BasketUser
+import fr.isen.repplinger.androiderestaurant.data.Category
+import fr.isen.repplinger.androiderestaurant.data.DataJson
+import fr.isen.repplinger.androiderestaurant.utils.getInfoInFile
 
 
 enum class DishType {
@@ -63,11 +65,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
+        Log.i("Stop", "HomeActivity")
     }
 
     override fun onDestroy() {
-        Log.i("Destroy", "HomeActivity")
         super.onDestroy()
+        Log.i("Destroy", "HomeActivity")
     }
 }
 
@@ -188,24 +191,4 @@ fun MainButton(type: DishType) {
     ) {
         Text(text = title)
     }
-}
-
-fun getInfoInFile(context: Context): BasketUser? {
-    val filePath = "basketUser.json"
-
-    val file = File(context.filesDir, filePath)
-
-    val basket: BasketUser? = if(file.exists()) {
-        Log.d("InfoFile", "Read File")
-        val json = file.readText()
-
-        val tmp = Gson().fromJson(json, BasketUser::class.java)
-        tmp
-    } else {
-        Log.d("InfoFile", "Create File")
-        file.createNewFile()
-        null
-    }
-
-    return basket
 }

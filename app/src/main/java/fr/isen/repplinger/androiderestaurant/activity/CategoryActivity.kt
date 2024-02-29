@@ -1,4 +1,4 @@
-package fr.isen.repplinger.androiderestaurant
+package fr.isen.repplinger.androiderestaurant.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -36,7 +35,12 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import fr.isen.repplinger.androiderestaurant.R
+import fr.isen.repplinger.androiderestaurant.data.Category
+import fr.isen.repplinger.androiderestaurant.data.DataJson
+import fr.isen.repplinger.androiderestaurant.data.MenuItem
 import fr.isen.repplinger.androiderestaurant.ui.theme.AndroidERestaurantTheme
+import fr.isen.repplinger.androiderestaurant.utils.getInfoInFile
 import org.json.JSONObject
 
 class CategoryActivity : ComponentActivity() {
@@ -58,14 +62,6 @@ class CategoryActivity : ComponentActivity() {
             }
         }
     }
-}
-
-@Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Composable
@@ -91,11 +87,11 @@ fun CreateRequest(type: DishType) {
         })
     queue.add(jsonObjectRequest)
 
-    CaterogyBody(type = type, recipes = recipes)
+    CategoryBody(type = type, recipes = recipes)
 }
 
 @Composable
-fun CaterogyBody(type: DishType, recipes: Category?) {
+fun CategoryBody(type: DishType, recipes: Category?) {
     val context = LocalContext.current
     val title = TitleCategory(type = type)
 
@@ -181,14 +177,5 @@ fun DisplayImage(meal: MenuItem, index: Int) {
                 .fillMaxWidth()
                 .height(300.dp)
         )
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview2() {
-    AndroidERestaurantTheme {
-        Greeting2("Android")
     }
 }

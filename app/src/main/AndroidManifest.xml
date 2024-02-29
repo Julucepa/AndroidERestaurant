@@ -16,22 +16,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".BasketActivity"
+            android:name=".activity.BasketActivity"
             android:exported="false"
             android:label="@string/title_activity_basket"
             android:theme="@style/Theme.AndroidERestaurant" />
         <activity
-            android:name=".MealActivity"
+            android:name=".activity.MealActivity"
             android:exported="false"
             android:label="@string/title_activity_meal"
             android:theme="@style/Theme.AndroidERestaurant" />
         <activity
-            android:name=".CategoryActivity"
+            android:name=".activity.CategoryActivity"
             android:exported="false"
             android:label="@string/title_activity_category"
             android:theme="@style/Theme.AndroidERestaurant" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidERestaurant" >
