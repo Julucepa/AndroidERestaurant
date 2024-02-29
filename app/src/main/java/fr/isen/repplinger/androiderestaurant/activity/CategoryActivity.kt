@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
@@ -111,15 +113,10 @@ fun CategoryBody(type: DishType, recipes: Category?) {
         horizontalAlignment = Alignment.CenterHorizontally)
     {
         recipes?.items?.forEach { meal ->
-            Divider(
-                color = Color.Black,
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Box(
+            OutlinedCard(
                 modifier= Modifier
                     .height(100.dp)
+                    .padding(bottom = 10.dp)
                     .clickable {
                         val intent = Intent(context, MealActivity::class.java)
                         val json = Gson().toJson(meal)
@@ -131,7 +128,7 @@ fun CategoryBody(type: DishType, recipes: Category?) {
                     modifier = Modifier.fillMaxSize(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(modifier = Modifier.width(50.dp)) {
+                    Box(modifier = Modifier.width(75.dp).padding(start=10.dp)) {
                         DisplayImage(meal = meal, 0)
                     }
 
@@ -139,13 +136,13 @@ fun CategoryBody(type: DishType, recipes: Category?) {
                         text = meal.nameFr,
                         modifier = Modifier
                             .padding(10.dp)
-                            .width(200.dp),
+                            .width(220.dp),
                         softWrap = true
                     )
 
                     Text(
                         text = meal.prices[0].price + "€",
-                        modifier = Modifier.padding(10.dp),
+                        modifier = Modifier.padding(end = 5.dp),
                         softWrap = true
                     )
                 }
@@ -172,7 +169,9 @@ fun DisplayImage(meal: MenuItem, index: Int) {
                 .height(300.dp)
         )
     } else {
-        Box(
+        Image(
+            painter = painterResource(id = R.drawable.ic_launcher_background),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)

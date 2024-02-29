@@ -110,7 +110,5 @@ fun sendCommandBasket(context: Context, basket: MutableLiveData<BasketUser>) {
 
     basket.postValue(null)
 
-    val json: String = Gson().toJson(basket.value)
-
-    file.writeText(json)
+    file.writeText("")
 }

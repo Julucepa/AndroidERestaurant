@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -77,7 +78,11 @@ fun BodyBasket(basket: MutableLiveData<BasketUser>) {
     LazyColumn() {
         basket.value?.let {
             items(it.basket) { meal ->
-                OutlinedCard {
+                OutlinedCard (
+                    modifier = Modifier
+                        .height(100.dp)
+                        .padding(bottom = 10.dp)
+                ){
                     Row(
                         modifier = Modifier.fillMaxSize(),
                         verticalAlignment = Alignment.CenterVertically
@@ -103,7 +108,7 @@ fun BodyBasket(basket: MutableLiveData<BasketUser>) {
                         )
 
                         Text(
-                            text = "X" + meal.quantity.toString(),
+                            text = "x" + meal.quantity.toString(),
                             modifier = Modifier.padding(10.dp),
                             softWrap = true
                         )

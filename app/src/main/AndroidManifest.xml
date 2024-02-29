@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AndroidERestaurant"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1265618380605957~8751890233"/>
         <activity
             android:name=".activity.BasketActivity"
             android:exported="false"

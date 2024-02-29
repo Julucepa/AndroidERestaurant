@@ -2,8 +2,8 @@
     <string name="app_name">AndroidERestaurant</string>
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_application">Restaurant</string>
-    <string name="button_starter">Starters</string>
-    <string name="button_main">Mains</string>
+    <string name="button_starter">Entrées</string>
+    <string name="button_main">Plats</string>
     <string name="button_dessert">Desserts</string>
     <string-array name="list_starter" category="STARTER">
         <item>Salad</item>
