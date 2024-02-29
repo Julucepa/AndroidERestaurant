@@ -1,7 +1,5 @@
 package fr.isen.repplinger.androiderestaurant
 
-import android.media.Image
-
 data class BasketUser(
     var basket: List<Meal>
 )
