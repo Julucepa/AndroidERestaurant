@@ -93,7 +93,7 @@ fun CreateRequest(type: DishType) {
 @Composable
 fun CategoryBody(type: DishType, recipes: Category?) {
     val context = LocalContext.current
-    val title = TitleCategory(type = type)
+    val title = titleCategory(type = type)
 
     Column(
         modifier = Modifier.fillMaxWidth(),

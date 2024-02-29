@@ -38,7 +38,6 @@ import fr.isen.repplinger.androiderestaurant.ui.theme.AndroidERestaurantTheme
 import fr.isen.repplinger.androiderestaurant.utils.getInfoInFile
 import fr.isen.repplinger.androiderestaurant.utils.removeInfoBasket
 import fr.isen.repplinger.androiderestaurant.utils.sendCommandBasket
-import java.io.File
 
 class BasketActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

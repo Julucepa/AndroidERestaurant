@@ -64,7 +64,7 @@ fun sendInfoBasket(meal: MenuItem, currentQuantity: Int, context: Context, baske
         val dish = Meal(meal.images[0], meal.nameFr, meal.prices[0].price.toFloat(), currentQuantity)
         val newBasket: MutableList<Meal> = mutableListOf()
         newBasket.add(dish)
-        basket.value = newBasket?.let { BasketUser(it) }
+        basket.value = BasketUser(newBasket)
 
         basket.postValue(basket.value)
 

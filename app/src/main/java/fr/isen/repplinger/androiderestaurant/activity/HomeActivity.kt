@@ -137,7 +137,7 @@ fun Body() {
 }
 
 @Composable
-fun TitleCategory(type: DishType): String {
+fun titleCategory(type: DishType): String {
     val context = LocalContext.current
     val title: String = when(type) {
         DishType.STARTER -> {
@@ -173,7 +173,7 @@ fun mealCategory(type: DishType, json: DataJson): Category {
 @Composable
 fun MainButton(type: DishType) {
     val context = LocalContext.current
-    val title = TitleCategory(type = type)
+    val title = titleCategory(type = type)
 
     Button(onClick = {
         Toast.makeText(
