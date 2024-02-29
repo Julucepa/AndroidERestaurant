@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">AndroidERestaurant</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_application">Restaurant</string>
+    <string name="button_starter">Starters</string>
+    <string name="button_main">Mains</string>
+    <string name="button_dessert">Desserts</string>
+    <string-array name="list_starter" category="STARTER">
+        <item>Salad</item>
+        <item>Bruschetta</item>
+        <item>Garlic Bread</item>
+    </string-array>
+    <string-array name="list_main" category="MAIN">
+        <item>Pasta</item>
+        <item>Fries</item>
+        <item>Hamburger</item>
+    </string-array>
+    <string-array name="list_desserts" category="DESERTS">
+        <item>Cake</item>
+        <item>Tiramisu</item>
+        <item>Ice cream</item>
+    </string-array>
+    <string name="title_activity_meal">MealActivity</string>
+    <string name="title_activity_basket">BAsketACtivity</string>
 </resources>
