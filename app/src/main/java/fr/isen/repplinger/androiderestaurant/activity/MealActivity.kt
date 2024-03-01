@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,19 +60,13 @@ class MealActivity : ComponentActivity() {
         basket.observe(this) { basketUser ->
             setContent {
                 AndroidERestaurantTheme {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        Header(getString(R.string.title_application), basketUser)
-                        MealBody(meal = meal, basket)
+                    Scaffold (
+                        topBar = {
+                            Header(getString(R.string.title_application), basketUser)
+                        }
+                    ){ padding ->
+                        MealBody(meal = meal, basket, padding)
                     }
-                }
-            }
-        }
-
-        setContent {
-            AndroidERestaurantTheme {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Header(getString(R.string.title_application), basket.value)
-                    MealBody(meal = meal, basket)
                 }
             }
         }
@@ -78,11 +74,12 @@ class MealActivity : ComponentActivity() {
 }
 
 @Composable
-fun MealBody(meal: MenuItem, basket: MutableLiveData<BasketUser>) {
+fun MealBody(meal: MenuItem, basket: MutableLiveData<BasketUser>, padding: PaddingValues) {
     val context = LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
-        .verticalScroll(rememberScrollState()),
+        .verticalScroll(rememberScrollState())
+        .padding(padding),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
         Carousel(meal)

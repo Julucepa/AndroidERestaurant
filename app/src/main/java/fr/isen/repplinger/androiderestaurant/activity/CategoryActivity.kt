@@ -1,5 +1,6 @@
 package fr.isen.repplinger.androiderestaurant.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,20 +58,27 @@ class CategoryActivity : ComponentActivity() {
 
         setContent {
             AndroidERestaurantTheme {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Header(getString(R.string.title_application), basket)
-                    CreateRequest(intent.getSerializableExtra("category") as DishType)
+                Scaffold (
+                    topBar = {
+                        Header(getString(R.string.title_application), basket)
+                    }
+                ){ padding ->
+                    CreateRequest(intent.getSerializableExtra("category") as DishType, padding)
                 }
+                /*Column(modifier = Modifier.fillMaxSize()) {
+                    Header(getString(R.string.title_application), basket)
+
+                }*/
             }
         }
     }
 }
 
 @Composable
-fun CreateRequest(type: DishType) {
+fun CreateRequest(type: DishType, padding: PaddingValues) {
     val context = LocalContext.current
     val queue = Volley.newRequestQueue(context)
-    val url = "http://test.api.catering.bluecodegames.com/menu"
+    val url = context.getString(R.string.url_base)
 
     val params = JSONObject()
     params.put("id_shop", "1")
@@ -87,64 +97,78 @@ fun CreateRequest(type: DishType) {
         })
     queue.add(jsonObjectRequest)
 
-    CategoryBody(type = type, recipes = recipes)
+    CategoryBody(type = type, recipes = recipes, padding)
 }
 
 @Composable
-fun CategoryBody(type: DishType, recipes: Category?) {
+fun CategoryBody(type: DishType, recipes: Category?, padding: PaddingValues) {
     val context = LocalContext.current
     val title = titleCategory(type = type)
 
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally)
-    {
-        Text(
-            text = title,
-            modifier = Modifier.padding(10.dp),
-            fontWeight = FontWeight.Bold
-        )
-    }
+    Column (
+        modifier = Modifier.
+        padding(padding)
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally)
+        {
+            Text(
+                text = title,
+                modifier = Modifier.padding(10.dp),
+                fontWeight = FontWeight.Bold
+            )
+        }
 
-    Column(modifier = Modifier
-        .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally)
-    {
-        recipes?.items?.forEach { meal ->
-            OutlinedCard(
-                modifier= Modifier
-                    .height(100.dp)
-                    .padding(bottom = 10.dp)
-                    .clickable {
-                        val intent = Intent(context, MealActivity::class.java)
-                        val json = Gson().toJson(meal)
-                        intent.putExtra("meal", json)
-                        context.startActivity(intent)
-                    }
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(modifier = Modifier.width(75.dp).padding(start=10.dp)) {
-                        DisplayImage(meal = meal, 0)
-                    }
-
-                    Text(
-                        text = meal.nameFr,
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .width(220.dp),
-                        softWrap = true
-                    )
-
-                    Text(
-                        text = meal.prices[0].price + "€",
-                        modifier = Modifier.padding(end = 5.dp),
-                        softWrap = true
-                    )
-                }
+        Column(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally)
+        {
+            recipes?.items?.forEach { meal ->
+                CardMeal(meal = meal, context = context)
             }
+        }
+    }
+}
+
+@Composable
+fun CardMeal(meal: MenuItem, context: Context) {
+    OutlinedCard(
+        modifier= Modifier
+            .height(100.dp)
+            .padding(bottom = 10.dp)
+            .clickable {
+                val intent = Intent(context, MealActivity::class.java)
+                val json = Gson().toJson(meal)
+                intent.putExtra("meal", json)
+                context.startActivity(intent)
+            }
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(modifier = Modifier
+                .width(75.dp)
+                .padding(start = 10.dp)) {
+                DisplayImage(meal = meal, 0)
+            }
+
+            Text(
+                text = meal.nameFr,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .width(220.dp),
+                softWrap = true
+            )
+
+            Text(
+                text = meal.prices[0].price + "€",
+                modifier = Modifier.padding(end = 5.dp),
+                softWrap = true
+            )
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import fr.isen.repplinger.androiderestaurant.ui.theme.AndroidERestaurantTheme
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import fr.isen.repplinger.androiderestaurant.R
 import fr.isen.repplinger.androiderestaurant.data.BasketUser
 import fr.isen.repplinger.androiderestaurant.data.Category
@@ -56,9 +58,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AndroidERestaurantTheme {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Header(getString(R.string.title_application), basket)
-                    Body()
+                Scaffold (
+                    topBar = {
+                        Header(getString(R.string.title_application), basket)
+                    }
+                ){ padding ->
+                    Body(padding)
                 }
             }
         }
@@ -95,7 +100,8 @@ fun Header(title: String, basket: BasketUser?) {
     ) {
         Text(
             text = title,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(16.dp)
                 .clickable {
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
@@ -130,10 +136,10 @@ fun Header(title: String, basket: BasketUser?) {
 }
 
 @Composable
-fun Body() {
+fun Body(padding: PaddingValues) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally)
+        .padding(padding), horizontalAlignment = Alignment.CenterHorizontally)
     {
         MainButton(type = DishType.STARTER)
         MainButton(type = DishType.MAIN)
